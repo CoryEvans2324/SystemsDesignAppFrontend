@@ -5,17 +5,14 @@ import { Route, Switch } from "react-router-dom"
 import { APP_LOAD, REDIRECT } from "../constants/actionTypes"
 import agent from "../agent"
 
-
-import Login from "./Login"
-import Register from "./Register"
 import Home from "./Home"
+import ResultMap from "./ResultMap"
 import { push } from "connected-react-router"
 
 const mapStateToProps = state => {
 	return {
 		appLoaded: state.common.appLoaded,
 		appName: state.common.appName,
-		currentUser: state.common.currentUser,
 		redirectTo: state.common.redirectTo,
 	}
 }
@@ -52,8 +49,7 @@ class App extends React.Component {
 		if (this.props.appLoaded) {
 			return (<>
 				<Switch>
-					<Route path="/register" component={Register} />
-					<Route path="/login" component={Login} />
+					<Route path="/map" component={ResultMap} />
 					<Route path="/" component={Home} />
 				</Switch>
 			</>)

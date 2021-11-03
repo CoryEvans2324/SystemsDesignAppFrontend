@@ -3,12 +3,12 @@ import { connectRouter } from "connected-react-router";
 
 
 import common from "./reducers/common";
-import auth from "./reducers/auth";
+import search from "./reducers/search";
 
 
 const createRootReducer = (history) => combineReducers({
 	router: connectRouter(history),
-	auth,
+	search,
 	common,
 })
 
