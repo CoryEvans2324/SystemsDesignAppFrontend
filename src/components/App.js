@@ -8,6 +8,7 @@ import agent from "../agent"
 import Home from "./Home"
 import ResultMap from "./ResultMap"
 import { push } from "connected-react-router"
+import Admin from "./Admin"
 
 const mapStateToProps = state => {
 	return {
@@ -49,6 +50,7 @@ class App extends React.Component {
 		if (this.props.appLoaded) {
 			return (<>
 				<Switch>
+					<Route path="/admin" component={Admin} />
 					<Route path="/map" component={ResultMap} />
 					<Route path="/" component={Home} />
 				</Switch>
