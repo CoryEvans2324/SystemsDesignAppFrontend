@@ -35,10 +35,10 @@ class Search extends React.Component {
 			'lake', 'waterfall'
 		]	
 		return (
-		<div className=" max-w-lg mx-auto">
+		<div className="mt-4 max-w-lg mx-auto">
 			<h1>Search for a track</h1>
 			<form className="m-2 flex flex-col space-y-2" onSubmit={this.submitForm}>
-				<div className="grid grid-cols-2">
+				<div className="grid grid-cols-2 gap-1">
 					<label>Region</label>
 					<select name="region" onChange={this.props.handleChange}>
 						<option value="">Select a region</option>

@@ -32,7 +32,7 @@ class ResultMap extends React.Component {
 				<MapContainer
 					center={[-39, 175]}
 					zoom={6}
-					style={{ height: '100vh', width: '100vw' }}
+					style={{ height: `600px`, width: '100vw' }}
 				>
 					<TileLayer
 						url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'

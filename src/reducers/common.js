@@ -11,8 +11,6 @@ const common = (state = defaultState, action) => {
 			return {
 				...state,
 				appLoaded: true,
-				token: action.token || null,
-				currentUser: action.payload ? action.payload : null
 			}
 
 		case REDIRECT:

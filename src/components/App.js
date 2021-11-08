@@ -3,12 +3,12 @@ import { connect } from "react-redux"
 import { Route, Switch } from "react-router-dom"
 
 import { APP_LOAD, REDIRECT } from "../constants/actionTypes"
-import agent from "../agent"
 
 import Home from "./Home"
 import ResultMap from "./ResultMap"
 import { push } from "connected-react-router"
 import Admin from "./Admin"
+import Navigation from "./Navigation"
 
 const mapStateToProps = state => {
 	return {
@@ -19,16 +19,20 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-	onLoad: (payload, token) =>
-		dispatch({ type: APP_LOAD, payload, token}),
+	onLoad: () =>
+		dispatch({ type: APP_LOAD }),
 	redirect: (url) => {
 		dispatch( push(url) )
 		dispatch({ type: REDIRECT })
-	}
+	},
 })
 
 class App extends React.Component {
-	state = {}
+	constructor() {
+		super()
+		this.state = {}
+		this.navRef = React.createRef()
+	}
 	static getDerivedStateFromProps(nextProps, state) {
 		if (nextProps.redirectTo) {
 			nextProps.redirect(nextProps.redirectTo)
@@ -38,20 +42,16 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
-		const token = window.localStorage.getItem('jwt')
-		if (token) {
-			agent.setToken(token)
-		}
-
-		this.props.onLoad(token ? agent.Auth.current() : null, token)
+		this.props.onLoad()
 	}
 
 	render() {
 		if (this.props.appLoaded) {
 			return (<>
+				<Navigation />
 				<Switch>
-					<Route path="/admin" component={Admin} />
-					<Route path="/map" component={ResultMap} />
+					<Route path="/admin" exact component={Admin} />
+					<Route path="/map" exact component={ResultMap} />
 					<Route path="/" component={Home} />
 				</Switch>
 			</>)
