@@ -1,8 +1,8 @@
 {
-  "name": "react-redux-template",
+  "name": "systemsdesignappfrontend",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:CoryEvans2324/react-redux-template.git",
+  "repository": "git@github.com:CoryEvans2324/SystemsDesignAppFrontend.git",
   "author": "Cory Evans <cory.evans@mailbox.org>",
   "license": "MIT",
   "dependencies": {

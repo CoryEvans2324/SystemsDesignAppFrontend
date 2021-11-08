@@ -15,8 +15,8 @@ const Admin = {
 const Tracks = {
 	get: (id) =>
 		superagent.get(`${API_ROOT}/tracks/${id}`).then(responseBody),
-	getAll: () =>
-		superagent.get(`${API_ROOT}/tracks/`).then(responseBody),
+	getAll: (limit = 1000) =>
+		superagent.get(`${API_ROOT}/tracks/?limit=${limit}`).then(responseBody),
 }
 
 const agent = {

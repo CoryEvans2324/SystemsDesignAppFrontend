@@ -1,8 +1,7 @@
 // this middleware was taken from
 // https://github.com/gothinkster/react-redux-realworld-example-app/blob/master/src/middleware.js
 
-import agent from "./agent";
-import { ASYNC_END, ASYNC_START, LOGOUT, LOGIN, REGISTER } from "./constants/actionTypes";
+import { ASYNC_END, ASYNC_START } from "./constants/actionTypes";
 
 const promiseMiddleware = (store) => (next) => (action) => {
 	if (isPromise(action.payload)) {
@@ -55,19 +54,4 @@ function isPromise(v) {
 	return v && typeof v.then === "function";
 }
 
-const localStorageMiddleware = (store) => (next) => (action) => {
-	if (action.type === REGISTER || action.type === LOGIN) {
-		if (!action.error) {
-			window.localStorage.setItem("jwt", action.payload.token);
-			agent.setToken(action.payload.token);
-		}
-	} else if (action.type === LOGOUT) {
-		agent.Auth.logout();
-		window.localStorage.setItem("jwt", "");
-		agent.setToken(null);
-	}
-
-	next(action);
-};
-
-export { localStorageMiddleware, promiseMiddleware };
+export { promiseMiddleware };
