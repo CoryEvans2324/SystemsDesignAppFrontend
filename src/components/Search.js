@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
-import { UPDATE_SEARCH_FIELD } from "../constants/actionTypes";
+import { ADD_SEARCH_FEATURE, REMOVE_SEARCH_FEATURE, UPDATE_SEARCH_FIELD } from "../constants/actionTypes";
 
 
 const mapStateToProps = state => ({
-	search: state.search
+	...state.search
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -19,8 +19,36 @@ const mapDispatchToProps = dispatch => ({
 				value: event.target.value
 			}
 		})
+	},
+	addFeatureToSearch: (feature) => {
+		dispatch({
+			type: ADD_SEARCH_FEATURE,
+			payload: {
+				feature
+			}
+		})
+		dispatch({
+			type: UPDATE_SEARCH_FIELD,
+			payload: {
+				field: 'featureSearch',
+				value: ''
+			}
+		})
+	},
+	removeFeatureFromSearch: (feature) => {
+		dispatch({
+			type: REMOVE_SEARCH_FEATURE,
+			payload: {
+				feature
+			}
+		})
 	}
 })
+
+const all_features = [
+	'lake',
+	'waterfall'
+]
 
 class Search extends React.Component {
 	constructor() {
@@ -30,10 +58,15 @@ class Search extends React.Component {
 			this.props.search()
 		}
 	}
+	featureOnChange = (e) => {
+		this.props.handleChange({
+			target: {
+				name: 'featureSearch',
+				value: e.target.value
+			}
+		})
+	}
 	render() {
-		const features = [
-			'lake', 'waterfall'
-		]	
 		return (
 		<div className="mt-4 max-w-lg mx-auto">
 			<h1>Search for a track</h1>
@@ -52,11 +85,13 @@ class Search extends React.Component {
 						<option value="long">4h+</option>
 					</select>
 				</div>
-				<div>
+				<div className="flex flex-col space-y-2">
 					<h2>Features</h2>
 					<ul className="flex flex-wrap">
-						{features.map((feature, i) =>
-							<li key={i} className="px-2 rounded-full bg-gray-200 mx-1 flex items-center space-x-2 cursor-pointer">
+						{this.props.features.map((feature, i) =>
+							<li key={i} className="px-2 rounded-full bg-gray-200 mx-1 flex items-center space-x-2 cursor-pointer"
+								onClick={() => this.props.removeFeatureFromSearch(feature)}
+							>
 								<span>{feature}</span>
 								<svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
 									<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -66,6 +101,22 @@ class Search extends React.Component {
 							</li>
 						)}
 					</ul>
+					<div className="flex flex-col relative">
+						<input
+							type="text"
+							className="placeholder-shown:italic"
+							value={this.props.featureSearch}
+							onChange={this.featureOnChange}
+							placeholder="Add a search tag"
+						/>
+						<ul className="absolute top-full left-0 w-full overflow-auto max-h-[120px] bg-white rounded-lg shadow-lg z-10 divide-y">
+							{all_features.filter(feature => this.props.featureSearch && feature.includes(this.props.featureSearch) && !this.props.features.includes(feature)).map((feature, i) =>
+								<li key={i} className="px-2 py-1 cursor-pointer" onClick={() => this.props.addFeatureToSearch(feature)}>
+									<span>{feature}</span>
+								</li>
+							)}
+						</ul>
+					</div>
 				</div>
 				<button
 					className="bg-blue-600 text-white font-semibold py-2 rounded shadow"
