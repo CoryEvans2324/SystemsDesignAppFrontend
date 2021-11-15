@@ -2,9 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import { MapContainer, TileLayer, Popup, Polyline } from 'react-leaflet'
 import agent from "../agent";
+import { SET_MAP_POSITION } from "../constants/actionTypes";
 
-const mapDispatchToProps = dispatch => ({})
-const mapStateToProps = state => ({})
+const mapDispatchToProps = dispatch => ({
+	setMapPostion: (position) =>
+		dispatch({ type: SET_MAP_POSITION, payload: position })
+});
+
+const mapStateToProps = state => ({
+	center: state.map.mapPosition,
+})
 
 class ResultMap extends React.Component {
 	constructor() {
@@ -14,10 +21,9 @@ class ResultMap extends React.Component {
 		}
 
 		this.map = null
-		this.centerStart = [-39.208847057702286, 176.76727294921878]
 	}
 	componentDidMount() {
-		this.getTracks(this.centerStart[0], this.centerStart[1])
+		this.getTracks(this.props.center[0], this.props.center[1])
 	}
 	latlngsForTrack(track) {
 		return track.geometry.points.map(point => {
@@ -37,15 +43,16 @@ class ResultMap extends React.Component {
 	onMoveEnd(e) {
 		const center = e.target.getCenter()
 		this.getTracks(center.lat, center.lng)
+		this.props.setMapPostion([center.lat, center.lng])
 	}
 
 	render() {
 		return (
 			<div >
 				<MapContainer
-					center={this.centerStart}
+					center={this.props.center}
 					zoom={9}
-					style={{ height: `800px`, width: '100vw' }}
+					style={{ height: `500px`, width: '100%' }}
 					whenCreated={map => {
 						this.map = map
 						map.on('moveend', event => this.onMoveEnd(event))

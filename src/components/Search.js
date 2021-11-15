@@ -1,16 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
-import { ADD_SEARCH_FEATURE, REMOVE_SEARCH_FEATURE, UPDATE_SEARCH_FIELD } from "../constants/actionTypes";
+import { ADD_SEARCH_FEATURE, REMOVE_SEARCH_FEATURE, SET_MAP_POSITION, UPDATE_SEARCH_FIELD } from "../constants/actionTypes";
 
 
 const mapStateToProps = state => ({
-	...state.search
+	...state.search,
 })
 
 const mapDispatchToProps = dispatch => ({
-	search: () =>
-		dispatch(push('/map')),
+	search: (lat, lon) => {
+		if (lat && lon) {
+			dispatch({
+				type: SET_MAP_POSITION,
+				payload: [lat, lon]
+			})
+		}
+
+		dispatch(push('/map'))
+	},
 	handleChange: event => {
 		dispatch({
 			type: UPDATE_SEARCH_FIELD,
@@ -55,7 +63,12 @@ class Search extends React.Component {
 		super()
 		this.submitForm = (e) => {
 			e.preventDefault()
-			this.props.search()
+
+			var latlon = JSON.parse(this.props.region)
+			this.props.search(
+				latlon[0],
+				latlon[1]
+			)
 		}
 	}
 	featureOnChange = (e) => {
@@ -74,8 +87,9 @@ class Search extends React.Component {
 				<div className="grid grid-cols-2 gap-1">
 					<label>Region</label>
 					<select name="region" onChange={this.props.handleChange}>
-						<option value="">Select a region</option>
-						<option value="HB">Hawkes Bay</option>
+						<option value="[-35, 171]">Select a region</option>
+						<option value="[-39.208847057702286, 176.76727294921878]">Hawkes Bay</option>
+						<option value="[-38.06755472422527, 177.09548950195315]">Bay Of Plenty</option>
 					</select>
 
 					<label>Duration</label>
