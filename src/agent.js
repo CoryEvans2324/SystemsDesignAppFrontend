@@ -3,7 +3,7 @@ import _superagent from 'superagent'
 
 const superagent = superagentpromise(_superagent, global.Promise)
 
-const API_ROOT  = 'http://localhost:8000'
+const API_ROOT  = process.env.NODE_ENV === 'production' ? 'https://api.systems-design.corye.me' : 'http://localhost:8000'
 
 const responseBody = res => res.body
 

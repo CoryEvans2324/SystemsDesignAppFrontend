@@ -15,12 +15,6 @@ class Navigation extends React.Component {
 							Map
 						</Link>
 					</li>
-					<li className="flex-1"></li>
-					<li>
-						<Link to="/admin" className={navItemsClass}>
-							Admin
-						</Link>
-					</li>
 				</ul>
 			</nav>
 		)
