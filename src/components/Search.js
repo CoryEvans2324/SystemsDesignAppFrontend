@@ -90,6 +90,7 @@ class Search extends React.Component {
 						<option value="[-35, 171]">Select a region</option>
 						<option value="[-39.208847057702286, 176.76727294921878]">Hawkes Bay</option>
 						<option value="[-38.06755472422527, 177.09548950195315]">Bay Of Plenty</option>
+						<option value="[-43.42300370191847, 171.80145263671878]">Canterbury</option>
 					</select>
 
 					<label>Duration</label>

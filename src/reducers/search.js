@@ -1,7 +1,7 @@
 import { ADD_SEARCH_FEATURE, REMOVE_SEARCH_FEATURE, UPDATE_SEARCH_FIELD } from "../constants/actionTypes"
 
 const defaultState = {
-	region: '',
+	region: '[-39, 176]',
 	duration: 'short',
 	featureSearch: '',
 	features: [],
