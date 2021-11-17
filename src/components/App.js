@@ -50,11 +50,13 @@ class App extends React.Component {
 		if (this.props.appLoaded) {
 			return (<>
 				<Navigation />
-				<Switch>
-					<Route path="/admin" exact component={Admin} />
-					<Route path="/map" exact component={ResultMap} />
-					<Route path="/" component={Home} />
-				</Switch>
+				<div className="flex-1">
+					<Switch>
+						<Route path="/admin" exact component={Admin} />
+						<Route path="/map" exact component={ResultMap} />
+						<Route path="/" component={Home} />
+					</Switch>
+				</div>
 				<Footer className="h-12" />
 			</>)
 		}
