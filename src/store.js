@@ -13,10 +13,10 @@ const myRouterMiddleware = routerMiddleware(history)
 
 const getMiddleware = () => {
 	if (process.env.NODE_ENV === 'production') {
-		return applyMiddleware(myRouterMiddleware, promiseMiddleware, createLogger())
+		return applyMiddleware(myRouterMiddleware, promiseMiddleware)
 	}
 
-	return applyMiddleware(myRouterMiddleware, promiseMiddleware)
+	return applyMiddleware(myRouterMiddleware, promiseMiddleware, createLogger())
 }
 
 

@@ -9,6 +9,7 @@ import ResultMap from "./ResultMap"
 import { push } from "connected-react-router"
 import Admin from "./Admin"
 import Navigation from "./Navigation"
+import Footer from "./Footer"
 
 const mapStateToProps = state => {
 	return {
@@ -54,6 +55,7 @@ class App extends React.Component {
 					<Route path="/map" exact component={ResultMap} />
 					<Route path="/" component={Home} />
 				</Switch>
+				<Footer className="h-12" />
 			</>)
 		}
 
